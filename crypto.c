@@ -1,5 +1,13 @@
-#include "include/crypto.h"  
-  
+#include "include/crypto.h"
+
+bool is_valid(const char c, int* table);
+
+bool is_valid(const char c, int* table) {
+    if (table[c] == 0)
+        return false;
+    return true;
+}
+
 ssize_t base64_encode(char * res, const char * data) {
     // base64 code table
     char base64_table[64] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
@@ -66,6 +74,10 @@ ssize_t base64_decode(char * res, const char * data) {
     // 以4个字符为一位进行解码
     int i, j;
     for (i = 0, j = 0; j <= str_len; j += 3, i += 4) {
+        if ( !is_valid(data[i], table) || !is_valid(data[i+1], table) || !is_valid(data[i+2], table) ) {
+            strcpy(res, "Error decode format!");
+            return strlen(res);
+        }
         res[j] = ((char)table[data[i]]) << 2 | (((char)table[data[i + 1]]) >> 4);           // 取出第一个字符对应base64表的十进制数的前6位与第二个字符对应base64表的十进制数的后2位进行组合
         res[j + 1] = (((char)table[data[i + 1]]) << 4) | (((char)table[data[i + 2]]) >> 2); // 取出第二个字符对应base64表的十进制数的后4位与第三个字符对应bas464表的十进制数的后4位进行组合
         res[j + 2] = (((char)table[data[i + 2]]) << 6) | ((char)table[data[i + 3]]);        // 取出第三个字符对应base64表的十进制数的后2位与第4个字符进行组合

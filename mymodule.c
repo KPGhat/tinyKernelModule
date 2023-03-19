@@ -34,16 +34,16 @@ static ssize_t my_write(struct file* file, const char __user* user_buffer, size_
     if ( copy_from_user(buffer, user_buffer, length) )
         return -EFAULT;
     int buffer_len = strlen(buffer);
-    // printk(KERN_INFO "[+] user_buffer %s.", buffer);
+    printk(KERN_INFO "[+] user_buffer %s.", buffer);
 
     if ( ( retlen = readfunc(funcname, buffer, length) ) < 0 )
         return retlen;
-    // printk(KERN_INFO "[+] funcname %s.", funcname);
+    printk(KERN_INFO "[+] funcname %s.", funcname);
     
-    if ( (retlen = readdata(data, buffer + retlen, length - retlen)) < 0)
+    if ( (retlen = readdata(data, buffer + retlen + 1, length - retlen - 1)) < 0)
         return retlen;
     
-    // printk(KERN_INFO "[+] data %s.", data);
+    printk(KERN_INFO "[+] data %s.", data);
 
     int i;
     for (i = 0; i < FUNCNUM; i++) {
@@ -52,6 +52,7 @@ static ssize_t my_write(struct file* file, const char __user* user_buffer, size_
             memset(result, 0, sizeof(char) * RESULTLEN);
             retlen = (*func[i])(result, data);
             result[retlen++] = '\n';
+            result[retlen] = '\0';
             break;
         }
     }

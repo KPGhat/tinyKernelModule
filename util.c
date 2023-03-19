@@ -65,13 +65,8 @@ ssize_t readdata(char * data, const char * user_buffer, size_t length) {
     memset(data, 0, sizeof(char) * DATALEN);
     start = end = datalen = 0;
 
-    // Clear the start space and Separator
-    while ( is_space(user_buffer[start]) || is_split(user_buffer[start]) ) {
-        start++;
-    }
-
-    end = start;
-    while (end <= length && ! is_split(user_buffer[end]) && ! is_space(user_buffer[end])) {
+    //data can be any format
+    while (end < length) {
         if (datalen >= DATALEN)
             return -ENOMEM;
         end++;
