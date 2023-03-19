@@ -20,7 +20,6 @@ static ssize_t my_read(struct file* file, char __user* user_buffer, size_t lengt
     }
 
     printk(KERN_INFO "[+] Reading result.");
-    result[result_len++] = '\n';
     if ( copy_to_user(user_buffer, result, result_len) )
         return -EFAULT;
     *offset = result_len;
@@ -51,7 +50,8 @@ static ssize_t my_write(struct file* file, const char __user* user_buffer, size_
         if ( strcmp(funcname, funclist[i]) == 0 ) {
             printk(KERN_INFO "[+] Calling our very own module function %s.", funcname);
             memset(result, 0, sizeof(char) * RESULTLEN);
-            (*func[i])(result, data);
+            retlen = (*func[i])(result, data);
+            result[retlen++] = '\n';
             break;
         }
     }

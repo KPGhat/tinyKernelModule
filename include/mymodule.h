@@ -26,7 +26,7 @@ char * funclist[FUNCNUM];
 ssize_t (* func[FUNCNUM])(char *, const char *);
 char result[RESULTLEN] = {0};
 
-static const char USAGE[] = "Usage:\n\twrite data to the proc entry we make\nContent format:\n\tfunction to call (Existing function: base64 encode and decode, easter egg...)\n\tdata to be processed\nFor example:\n\tbase64 encode\n\tdata to be encode";
+static const char USAGE[] = "Usage:\n\t\twrite data to the proc entry we make\nContent format:\n\t\tfunction to call (Existing function: base64 encode and decode, easter egg...)\n\t\tdata to be processed\nFor example:\n\t\tbase64 encode|data to be encode\n";
 
 static int my_open(struct inode *, struct file *);
 static int my_release(struct inode *, struct file *);

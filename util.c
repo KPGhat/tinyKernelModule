@@ -4,7 +4,7 @@ bool is_split(const char c);
 bool is_space(const char c);
 
 bool is_split(const char c) {
-    return c == '\n' || c == '\r' || c == '\0';
+    return c == '\n' || c == '\r' || c == '\0' || c == '|';
 }
 
 bool is_space(const char c) {
