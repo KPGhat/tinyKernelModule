@@ -22,7 +22,7 @@ testread:
 	cat /proc/modulecrypto
 	dmesg
 testwrite:
-	echo "base64 encode\nasdfadsfasfdas\n" > /proc/modulecrypto
+	echo "base64 encode|test data" > /proc/modulecrypto
 	dmesg
 unload:
 	-sudo rmmod $(MODULE_NAME)

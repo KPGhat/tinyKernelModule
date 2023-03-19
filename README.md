@@ -25,7 +25,7 @@ cat /proc/modulecrypto
 向 `/proc/modulecrypo` 写如要使用的功能和要编码的数据，来触发内核模块进行编解码
 
 ```
-echo "base64 encode\ntest\n" > /proc/modulecrypto
+echo "base64 encode|test" > /proc/modulecrypto
 ```
 
 再次读取获得编码结果
